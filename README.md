@@ -10,6 +10,8 @@ A premium Indian lifestyle commerce prototype and Product Owner — AI-Enabled D
 - Search, filter and sort; inspect product details, INR pricing and availability.
 - Add to a guest cart, change quantities and recover from invalid or stale local state.
 - Complete validated, simulated success or decline checkout. No money moves, no stock is reserved and no shipment is created.
+- Switch between Light (ivory/forest) and Moonlight (indigo/silver), with a remembered local preference and unchanged original product colours.
+- See Added feedback, an accurate floating guest-cart count and restrained navigation transitions that respect reduced motion.
 - Use responsive layouts, keyboard navigation, visible focus, local fonts and original illustrations.
 
 Demo cart and simulated confirmations are browser-local. They are not durable server orders. Login, account and admin routes explain their disabled boundaries in this mode. Authentication and database mutations remain disabled until hosted integration is separately verified. The repository also contains the database-backed implementation and its tests; inclusion is not a claim of hosted readiness.
@@ -56,6 +58,8 @@ This is a **sanitized publication snapshot, not the complete development history
 
 This repository is an interview portfolio artifact, not a production-ready store. There is no real payment gateway, production customer data, verified hosted authentication or automatic deployment integration. The existing public demo can lag this source; publication does not deploy or change it.
 
-## Editorial redesign
+## Editorial design and Light/Moonlight release
 
-The current source includes the approved Editorial Gallery homepage and Stillness Edit, using original SVG artwork, responsive composition and explicit commerce actions. The source is ahead of the separately controlled production release. After a demo-mode build, run `npx playwright test --config playwright.stillness-edit.config.ts` for the 75-case local storefront/redesign regression set (installed Chrome required). This command starts a local server and does not deploy.
+The source includes the Editorial Gallery homepage, original Stillness artwork, theme-aware Stillness/Navratri transitions, persistent Light/Moonlight preference, Added feedback, page entrances and a floating cart that avoids product images, prices and controls. Mobile gutters and sale-card wrapping are corrected; desktop editorial asymmetry is preserved.
+
+After a demo-mode build, run `npx playwright test --config playwright.twilight-regression.config.ts` for the complete relevant 202-case local demo browser regression (installed Chrome required). The accepted source gate executed 166 unit and 202 browser cases, with no failures or skips; this is local demo evidence, not hosted or deployed verification. See the [release candidate record](docs/releases/light-moonlight.md) for source ancestry, exact scope, limitations and rollback. Publication does not update production, and deployment requires separate approval.

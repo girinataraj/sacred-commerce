@@ -9,6 +9,7 @@ import {categoryStories} from './content';
 import {ShopIcon} from './icons';
 import styles from './homepage.module.css';
 import {StillnessEdit} from './stillness';
+import {AddButton} from './add-button';
 
 type Product=(typeof demoProducts)[number];
 const galleryIds=['SC-001','SC-002','SC-008','SC-011','SC-016'];
@@ -22,7 +23,7 @@ function Artwork({product,priority=false,sizes='(max-width: 767px) 90vw, 40vw'}:
  return <ProductImage src={visual.src} alt={productImageAlt(product.name,visual)} priority={priority} sizes={sizes}/>;
 }
 
-export function EditorialHome({cart,onAdd,feedback}:{cart:DemoCart;onAdd:(id:string)=>void;feedback:ReactNode}){
+export function EditorialHome({cart,onAdd,feedback}:{cart:DemoCart;onAdd:(id:string)=>boolean;feedback:ReactNode}){
  return <main id="main-content" tabIndex={-1} className={`${styles.page} ha-home`}>
   <section className={styles.hero} aria-labelledby="ha-hero-title">
    <div className={styles.heroCopy}>
@@ -62,7 +63,7 @@ export function EditorialHome({cart,onAdd,feedback}:{cart:DemoCart;onAdd:(id:str
    <div className={styles.feedback}>{feedback}</div>
    <div className={styles.galleryGrid}>{gallery.map((product,i)=><article key={product.id} data-product-id={product.id} className={`${styles.galleryPiece} ${styles[`piece${i+1}`]} ha-gallery-piece`}>
     <Link prefetch={false} href={`/products/${product.slug}`} className={styles.galleryImage} tabIndex={-1} aria-label={`View ${product.name}`}><span className={styles.objectLabel}>{product.material} / {product.id}</span><Artwork product={product} sizes="(max-width: 599px) 90vw, (max-width: 1023px) 45vw, 30vw"/></Link>
-    <div className={styles.productCopy}><p className={styles.label}>{demoCategories[product.categorySlug]}</p><div className={styles.productTitle}><h3><Link prefetch={false} href={`/products/${product.slug}`}>{product.name}</Link></h3><PriceBlock {...product}/></div><AvailabilityLabel stock={product.stock}/><div className={styles.productActions}><button className={styles.addButton} onClick={()=>onAdd(product.id)} disabled={!product.stock||(cart[product.id]??0)>=product.stock}>Add to Cart<ShopIcon name="bag"/></button><Link prefetch={false} href={`/products/${product.slug}`}>View Details<ShopIcon name="arrow"/></Link></div></div>
+    <div className={styles.productCopy}><p className={styles.label}>{demoCategories[product.categorySlug]}</p><div className={styles.productTitle}><h3><Link prefetch={false} href={`/products/${product.slug}`}>{product.name}</Link></h3><PriceBlock {...product}/></div><AvailabilityLabel stock={product.stock}/><div className={styles.productActions}><AddButton className={styles.addButton} label="Add to Cart" onAdd={()=>onAdd(product.id)} disabled={!product.stock||(cart[product.id]??0)>=product.stock}/><Link prefetch={false} href={`/products/${product.slug}`}>View Details<ShopIcon name="arrow"/></Link></div></div>
    </article>)}<aside className={styles.galleryNote}><span className={styles.label}>A note on this collection</span><span className={styles.noteSymbol} aria-hidden="true">✳</span><h3>Fictional objects.<br/>Thoughtful choices.</h3><p>These original illustrations and product records belong to an independent interview project. Explore freely; every purchase is simulated.</p><Link prefetch={false} href="/demo-guide" className={styles.textLink}>How the demo works<ShopIcon name="arrow"/></Link></aside></div>
   </section>
 

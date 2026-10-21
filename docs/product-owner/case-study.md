@@ -49,3 +49,31 @@ The Stillness Edit follows Curated Offerings and precedes Navratri. Its heading,
 A tall mobile page is a deliberate trade-off for readable artwork and controls. Tests cover responsive widths, keyboard access, axe checks, image decoding, reduced motion and preserved commerce behavior. A screenshot evidence defect was traced to mixing viewport and document coordinates; corrected document-relative captures showed no layout defect and did not require a redesign.
 
 Potential success measures include editorial CTA engagement, downstream category/detail/cart engagement and comprehension of the fictional demo boundary. These are proposed measures, not measured uplift or deployed analytics.
+
+## Twilight experience and shopping feedback
+
+The local upgrade addresses three customer frictions: uncertainty after adding an item, repeated travel to the cart, and reading comfort across lighting conditions. It preserves the approved editorial hierarchy and fictional catalogue rather than introducing another homepage redesign.
+
+| Decision | Rationale and trade-off |
+|---|---|
+| 240ms CSS route entrance, 8px lift | Provides orientation without delaying navigation or replaying on cart edits. Reduced-motion preference removes decorative motion. |
+| Two-second Added feedback | Confirms a successful action while retaining focus and the existing accurate live announcement. Repeated additions use the latest cart snapshot; the timer never mutates quantities. |
+| Shared floating guest cart | Shows the existing store's summed quantity, including cross-tab edits. Nearby safe positions avoid actionable controls; it hides when no position is clear, while the drawer is open, and on cart/checkout. The header cart remains available. |
+| Explicit Light/Twilight preference | Light remains the default. A validated local preference is applied before hydration; blocked storage falls back to the current page session. No analytics or account information is collected. |
+| Reserved Stillness gradient bands | Softens the editorial-to-midnight-to-forest transition without drawing over copy, links or original illustrations. Extra vertical space is a deliberate trade-off for readability. |
+
+Twilight changes interface tokens rather than inverting product images. Focus, forms, selection, loading and feedback use the same scoped palette. The non-demo database-backed interface remains outside the appearance scope; no authentication, schema, checkout backend or inventory architecture changes are included.
+
+Proposed evaluation: compare add-confirmation comprehension and accidental repeat additions, time to reach/edit the cart, appearance preference retention, and mobile task completion. Establish a consented baseline before claiming improvement. No uplift has been measured and no analytics service was added. Address and payment-like form values must never enter measurement events.
+
+Verification combines existing editorial/Stillness/shopping regressions with focused preference, storage failure, rapid-add, badge, navigation, reduced-motion, responsive and axe checks. Screenshot evidence and exact executed results are recorded in the local upgrade handoff; browser automation does not replace assistive-technology or physical-device testing.
+
+## Approved Light and Moonlight identities
+
+The final palette separates two intentional identities within the existing editorial layout. Light preserves ivory, heritage forest green and original warm product colours, using a controlled ivory-to-sage-to-forest passage into Stillness. Moonlight uses midnight/deeper indigo, silver highlights and ivory typography throughout, including seasonal merchandising, footer, forms, floating cart and feedback. Background tokens change; product images and original editorial illustrations are not filtered or recoloured.
+
+The approved MagicPath concept informed the colour direction only. Its placeholder catalogue, mock shopping logic, illustrations and layout code were not imported. Existing discovery, shared cart, Added feedback, page motion, keyboard navigation and clearly disclosed simulation boundaries remain the product baseline.
+
+Light remains the default. The visible optional theme is Moonlight; its existing validated `twilight` storage value is retained for compatibility with previously saved preferences. This avoids a silent preference reset or unnecessary storage migration.
+
+Acceptance now includes computed background/gradient checks against cross-theme colour leakage, representative route and drawer axe checks, and both appearances at 320, 390, 768, 1440 and 1920px. Expanded checks exposed and corrected a low-contrast Light caption and an inherited ivory collection panel under Moonlight. These are verified quality improvements, not evidence of conversion uplift. Customer-comfort and preference-retention hypotheses still require consented research and measurement.
