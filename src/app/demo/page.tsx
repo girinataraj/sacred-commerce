@@ -20,5 +20,5 @@ export default async function DemoPage({searchParams}:Props){
  const known=['/','/products','/cart','/checkout','/collections/navratri-2026',...Object.keys(informationPages),...Object.keys(demoCategories).map(slug=>`/categories/${slug}`),...demoProducts.map(p=>`/products/${p.slug}`)];
  const guest=['/login','/account','/admin','/orders'].some(prefix=>path===prefix||path.startsWith(`${prefix}/`));
  if(!known.includes(path)&&!guest)notFound();
- return <DemoStore key={query.__demoPath} path={query.__demoPath||'/'} query={query}/>;
+ return <div className="demo-route-enter" key={path}><DemoStore key={query.__demoPath} path={query.__demoPath||'/'} query={query}/></div>;
 }

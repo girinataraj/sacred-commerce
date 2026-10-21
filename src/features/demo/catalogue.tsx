@@ -5,6 +5,7 @@ import type { SeedProduct } from '../../../prisma/seed-data';
 import { AvailabilityLabel, PriceBlock, ProductImage } from '../../components/ui/product-card';
 import { demoCategories, type DemoCart } from './model';
 import { getProductVisual, productImageAlt } from './product-visuals';
+import {AddButton} from './add-button';
 
 export function DemoCatalogueFilters({ seasonal, category, query }: {
   seasonal: boolean;
@@ -50,7 +51,7 @@ export function DemoCatalogueFilters({ seasonal, category, query }: {
 export function DemoProductGrid({ products, cart, onAdd }: {
   products: Array<SeedProduct & { id: string }>;
   cart: DemoCart;
-  onAdd: (id: string) => void;
+  onAdd: (id: string) => boolean;
 }) {
   return <div className="product-grid demo-product-grid">{products.map(product => {
     const visual = getProductVisual(product.slug);
@@ -63,7 +64,7 @@ export function DemoProductGrid({ products, cart, onAdd }: {
         <h3><Link prefetch={false} href={`/products/${product.slug}`}>{product.name}</Link></h3>
         <PriceBlock {...product} />
         <AvailabilityLabel stock={product.stock} />
-        <button className="button button-primary" disabled={!product.stock || (cart[product.id] ?? 0) >= product.stock} onClick={() => onAdd(product.id)}>Add to demo cart</button>
+        <AddButton disabled={!product.stock || (cart[product.id] ?? 0) >= product.stock} onAdd={() => onAdd(product.id)}/>
       </div>
     </article>;
   })}</div>;

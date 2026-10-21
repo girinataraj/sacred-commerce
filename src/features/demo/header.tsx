@@ -1,10 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import Link from 'next/link';
 import { Drawer } from '../../components/ui/drawer';
 import { demoCategories } from './model';
 import { ShopIcon } from './icons';
+import {AppearanceToggle} from './appearance';
+import {FloatingCart} from './floating-cart';
 
 export function StorefrontHeader({ count }: { count: number }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -15,6 +17,7 @@ export function StorefrontHeader({ count }: { count: number }) {
         <Link prefetch={false} className="wordmark sc-wordmark" href="/"><ShopIcon name="leaf" /><span className="sc-brand-copy">Sacred Commerce<span>Objects for considered living</span></span></Link>
         <p className="sc-header-note">Small rituals. A little more meaning.</p>
         <div className="sc-header-actions">
+          <AppearanceToggle/>
           <button type="button" className="sc-menu-button" aria-label="Open shop menu" aria-haspopup="dialog" aria-expanded={menuOpen} onClick={() => setMenuOpen(true)}><ShopIcon name="menu" /><span>Menu</span></button>
           <Link prefetch={false} className="button button-secondary sc-cart-link" href="/cart"><ShopIcon name="bag" /><span>Cart ({count})</span></Link>
         </div>
@@ -34,5 +37,6 @@ export function StorefrontHeader({ count }: { count: number }) {
       <Link prefetch={false} href="/demo-guide" onClick={() => setMenuOpen(false)}>How this demo works</Link>
       <p className="sc-drawer-note">Fictional products, a browser-saved cart and a clearly marked simulated checkout.</p>
     </Drawer>
+    <Suspense fallback={null}><FloatingCart count={count} menuOpen={menuOpen}/></Suspense>
   </header>;
 }
