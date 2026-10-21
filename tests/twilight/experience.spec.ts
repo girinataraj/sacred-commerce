@@ -9,7 +9,7 @@ test('theme toggle changes the actual canvas and persists',async({page})=>{
  expect(await page.evaluate(k=>localStorage.getItem(k),appearance)).toBe('twilight');await toggle.click();await page.reload();await expect(toggle).not.toBeChecked();
 });
 test('successful additions show temporary Added without changing cart when reset',async({page})=>{
- await page.goto('/');const button=page.locator('[data-product-id="SC-001"]').getByRole('button',{name:'Add to Cart'});await button.click();await expect(button).toContainText('Added',{timeout:1500});await expect(button).toBeFocused();
+ await page.goto('/');const button=page.locator('[data-product-id="SC-001"] .sc-add-button');await button.click();await expect(button).toContainText('Added',{timeout:1500});await expect(button).toBeFocused();
  await expect(button).toHaveText('Add to Cart',{timeout:3500});await page.goto('/cart');await expect(page.getByLabel('Quantity for Clay Festival Lamp')).toHaveValue('1');
 });
 test('floating cart uses live authoritative quantities and hides on purchase routes',async({page})=>{
@@ -31,7 +31,7 @@ test('reduced motion removes all decorative route, feedback and badge motion',as
  await page.emulateMedia({reducedMotion:'reduce'});await page.goto('/');expect(await page.locator('main').evaluate(n=>[n,...n.querySelectorAll('*')].filter(el=>{const s=getComputedStyle(el);return s.animationName!=='none'&&parseFloat(s.animationDuration)>0;}).length)).toBe(0);
 });
 test('rapid additions, limits and shared button feedback preserve exact totals',async({page})=>{
- await page.goto('/products/clay-festival-lamp');const add=page.getByRole('button',{name:'Add to demo cart'});await add.evaluate(button=>{for(let i=0;i<5;i++)(button as HTMLButtonElement).click();});await expect(page.getByRole('link',{name:'Cart (5)',exact:true})).toBeVisible();await expect(add).toContainText('Added');
+ await page.goto('/products/clay-festival-lamp');const add=page.locator('main .sc-add-button');await add.evaluate(button=>{for(let i=0;i<5;i++)(button as HTMLButtonElement).click();});await expect(page.getByRole('link',{name:'Cart (5)',exact:true})).toBeVisible();await expect(add).toContainText('Added');
  await page.goto('/products');const bell=page.locator('.product-card').filter({has:page.getByRole('heading',{name:'Brass Table Bell',exact:true})});await bell.getByRole('button',{name:'Add to demo cart'}).click();await expect(bell.getByRole('button')).toBeDisabled();await page.goto('/cart');await expect(page.getByLabel('Quantity for Clay Festival Lamp')).toHaveValue('5');await expect(page.getByText('Total: ₹1,794.00',{exact:true})).toBeVisible();
 });
 test('blocked storage leaves appearance, feedback and memory-only shopping usable',async({page})=>{
@@ -42,7 +42,7 @@ test('saved Moonlight is applied before hydration without console mismatches',as
  await page.goto('/products',{waitUntil:'domcontentloaded'});expect(await page.locator('html').getAttribute('data-demo-theme')).toBe('twilight');await expect(page.getByRole('switch')).toBeChecked();await page.reload();await expect(page.getByRole('switch')).toBeChecked();expect(errors).toEqual([]);
 });
 test('navigation clears transient Added feedback and badge reflects remove and checkout',async({page})=>{
- await page.goto('/products/clay-festival-lamp');await page.getByRole('button',{name:'Add to demo cart'}).click();await expect(page.getByRole('button',{name:'Add to demo cart'})).toContainText('Added');await page.goto('/products');await expect(page.getByRole('button',{name:'Add to demo cart'}).first()).toHaveText('Add to demo cart');
+ await page.goto('/products/clay-festival-lamp');await page.getByRole('button',{name:'Add to demo cart'}).click();await expect(page.getByRole('button',{name:'Added ✓',exact:true})).toContainText('Added');await page.goto('/products');await expect(page.getByRole('button',{name:'Add to demo cart'}).first()).toHaveText('Add to demo cart');
  await page.goto('/cart');await page.getByRole('button',{name:'Remove',exact:true}).click();await page.goto('/');await expect(page.getByRole('link',{name:'Open guest cart, 0 items'})).toBeVisible();
  await page.locator('[data-product-id="SC-001"]').getByRole('button',{name:'Add to Cart'}).click();await page.goto('/checkout');await expect(page.locator('.sc-floating-cart')).toHaveCount(0);await page.getByRole('button',{name:'Complete simulated purchase'}).click();await expect(page.getByRole('heading',{name:'Demo order confirmation'})).toBeVisible();await page.goto('/');await expect(page.getByRole('link',{name:'Open guest cart, 0 items'})).toBeVisible();
 });

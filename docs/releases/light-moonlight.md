@@ -35,3 +35,9 @@ Read-only integration checks found zero active GitHub webhooks, zero Actions wor
 Publication alone does not alter production. Before publication the candidate can simply remain local; public main is unchanged. If a later merge needs reversal, revert the approved PR/merge with a new reviewed commit rather than resetting or force-pushing. The previous source baseline remains reachable at `c4598d667c6b4537963ae3459bcd3ef542644073`. Any later Vercel release must separately record the then-current deployment, stage and verify the exact candidate, and retain/promote the previous verified deployment for rollback without rebuilding. No deployment ID is assumed current from historical records.
 
 Next: owner approval to push this exact candidate branch and open the prepared PR. Merge and production deployment remain separate gates. No Supabase or original-development-repository changes are included.
+
+## PR #1 accessibility follow-up
+
+Owner review identified that temporary Added ✓ text did not match the fixed accessible name. The new reviewed follow-up commit makes the name follow the existing visible state, preserving timer/click/stock logic, totals, live announcements and all visual styling. This supersedes the earlier Twilight handoff’s fixed-name decision while retaining that historical record. Four focused normal/Added-state cases and state-aware locator adjustments extend the complete browser set from 198 to 202.
+
+The follow-up final gate executed **166 unit + 202 browser = 368 PASS**, **0 FAIL / 0 skipped / 0 flaky**, with lint, typecheck and production build exit 0. The independent scoped review found no actionable issue. The original approved six commits remain ancestors; publication adds one correction commit, without rewriting history. A public-source security/integrity review precedes its authorized update to PR #1. Merge and deployment remain unauthorized; simulation and hosted-backend limitations remain unchanged.
