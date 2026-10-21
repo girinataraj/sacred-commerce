@@ -1,0 +1,4 @@
+import Link from 'next/link';
+import { Container } from './container';
+import { DemoFooter } from '../../features/demo/footer';
+export function AppFooter({ demo=false }: { demo?:boolean }) { if(demo)return <DemoFooter/>; return <footer className="site-footer"><Container><div className="footer-grid"><div><p className="footer-wordmark">Sacred Commerce</p><p>An independent exploration of considered living.</p></div><div><h2>About this demo</h2><p>Original fictional products. Simulated purchases only.</p><p>Explore original offerings, save your choices and try a clearly marked simulated checkout.</p></div><nav aria-label="Footer"><h2>Your account</h2><Link href="/login">Sign in to the demo</Link><Link href="/">Return to the beginning</Link></nav></div><div className="footer-note"><p>Sacred Commerce is not an official Isha Life store.</p><p>Created for an independent technical interview demonstration.</p></div></Container></footer>; }

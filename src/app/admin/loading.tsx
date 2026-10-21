@@ -1,0 +1,1 @@
+import {CustomerPage,PrivateLoading} from '../../features/customer/shared';export default function Loading(){return <CustomerPage title="Administration" eyebrow="Thoughtful stewardship" description="Private administrator workspace"><PrivateLoading label="Checking administrator access"/></CustomerPage>;}

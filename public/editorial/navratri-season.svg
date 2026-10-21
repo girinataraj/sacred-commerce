@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 540" fill="none">
+  <title>Original seasonal still life</title>
+  <desc>A terracotta vessel, abstract lamp and leaves in a softly framed alcove. An original demo illustration, not product photography.</desc>
+  <path fill="#EDE7DB" d="M0 0h720v540H0z"/>
+  <path d="M115 465V230a245 245 0 0 1 490 0v235" fill="#DFD4BF"/>
+  <path d="M143 465V230a217 217 0 0 1 434 0v235" fill="#F7F3E9"/>
+  <path d="M114 463h492M82 488h556" stroke="#9C896A" stroke-width="1.5"/>
+  <path d="M158 489h409l40 51H119l39-51Z" fill="#C7B69B"/>
+  <path d="M434 326c-9 38-36 62-39 101-1 22 13 43 49 43s51-18 47-43c-6-40-35-63-43-101" fill="#AC5540"/>
+  <ellipse cx="441" cy="326" rx="12" ry="4" fill="#743E30"/>
+  <path d="M440 327c2-50-14-87-6-131m7 82c35-18 57-44 74-76m-77 47c-30-23-48-48-55-81" stroke="#1E3C32" stroke-width="4" stroke-linecap="round"/>
+  <path d="M434 227c-29-13-35-42-22-61 28 13 34 41 22 61Zm35 20c1-31 25-48 48-44-1 29-23 48-48 44Zm-60-35c-31 0-48-20-46-43 29-3 49 17 46 43Zm88-3c2-25 22-40 44-37-3 27-21 42-44 37Z" fill="#1E3C32"/>
+  <path d="M222 406h128c-4 38-28 57-64 57s-60-19-64-57Z" fill="#AC5540"/>
+  <ellipse cx="286" cy="407" rx="64" ry="12" fill="#8D4434"/>
+  <path d="M287 396c-25-24-8-45 5-60 13 23 25 45-5 60Z" fill="#D1AB62"/>
+  <path d="M287 395c-10-12-2-24 4-31 6 13 9 23-4 31Z" fill="#F7F3E9"/>
+  <path d="M269 466h35M203 476h166" stroke="#9C896A" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M181 306h71v10h-71z" fill="#1E3C32" opacity=".65"/>
+  <path d="M171 294h93v11h-93z" fill="#D8C7A5"/>
+  <path d="M181 285h71v8h-71z" fill="#F7F3E9" stroke="#B39D7A"/>
+  <path d="M206 286v-25" stroke="#9C896A" stroke-width="1.5"/>
+  <circle cx="206" cy="254" r="5" fill="#AC5540"/>
+  <g fill="#C7A566"><circle cx="360" cy="61" r="3"/><circle cx="307" cy="67" r="3"/><circle cx="413" cy="67" r="3"/><circle cx="257" cy="85" r="3"/><circle cx="463" cy="85" r="3"/><circle cx="212" cy="116" r="3"/><circle cx="508" cy="116" r="3"/><circle cx="176" cy="155" r="3"/><circle cx="544" cy="155" r="3"/></g>
+  <path d="m126 334 5 5-5 5-5-5 5-5Zm467-90 5 5-5 5-5-5 5-5Z" stroke="#9C896A"/>
+</svg>

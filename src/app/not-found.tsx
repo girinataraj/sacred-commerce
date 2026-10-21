@@ -1,0 +1,2 @@
+import { ActionLink } from '../components/ui/button';
+export default function NotFoundPage() {return <main id="main-content" tabIndex={-1} className="container storefront-page missing-page"><p className="eyebrow">A different path awaits</p><h1>This listing is unavailable</h1><p>The product or category may be missing or inactive. Explore current listings instead.</p><ActionLink href="/products">Browse products</ActionLink></main>;}

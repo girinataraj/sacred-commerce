@@ -1,0 +1,11 @@
+import {z} from 'zod';
+import {addressSchema,uuidSchema} from '../checkout/schemas';
+const amount=z.number().int().min(0).max(2000000000);
+const paymentSchema=z.object({id:uuidSchema,outcome:z.enum(['SUCCEEDED','DECLINED']),reasonCode:z.string().min(1).max(80),amountPaise:amount,currency:z.literal('INR')});
+const summaryFields={id:uuidSchema,reference:z.string().min(1).max(80),status:z.enum(['PAYMENT_FAILED','CONFIRMED','SHIPPED','DELIVERED']),sourceCartRevision:z.number().int().min(0),currency:z.literal('INR'),subtotalPaise:amount,shippingPaise:z.literal(0),taxPaise:z.literal(0),totalPaise:amount,createdAt:z.iso.datetime()};
+const itemSchema=z.object({productId:uuidSchema,skuSnapshot:z.string().min(1).max(80),nameSnapshot:z.string().min(1).max(120),unitPricePaise:amount,quantity:z.number().int().min(1).max(10),lineTotalPaise:amount});
+export const orderSchema=z.object({...summaryFields,address:addressSchema,items:z.array(itemSchema).min(1).max(20),payment:paymentSchema}).refine(order=>order.totalPaise===order.subtotalPaise&&order.payment.amountPaise===order.totalPaise&&(order.status==='PAYMENT_FAILED')===(order.payment.outcome==='DECLINED'));
+export const checkoutResultSchema=z.object({order:orderSchema,payment:paymentSchema,replayed:z.boolean()}).refine(result=>result.payment.id===result.order.payment.id&&result.payment.outcome===result.order.payment.outcome&&result.payment.amountPaise===result.order.totalPaise);
+export const orderPageSchema=z.object({items:z.array(z.object(summaryFields)).max(24),total:z.number().int().min(0),page:z.number().int().min(1).max(10000),pageSize:z.number().int().min(1).max(24)});
+export const sessionSchema=z.object({actor:z.object({userId:uuidSchema,role:z.enum(['CUSTOMER','ADMIN'])})});
+export const quoteResponseSchema=z.object({cartId:uuidSchema,cartRevision:z.number().int().min(0),digest:z.string().regex(/^[a-f0-9]{64}$/),lines:z.array(z.object({productId:uuidSchema,sku:z.string(),name:z.string(),quantity:z.number().int().min(1).max(10),unitPricePaise:amount,lineTotalPaise:amount,version:z.number().int().min(0),stock:z.number().int().min(1),active:z.literal(true)})).min(1).max(20),currency:z.literal('INR'),subtotalPaise:amount,shippingPaise:z.literal(0),taxPaise:z.literal(0),totalPaise:amount}).refine(quote=>quote.totalPaise===quote.subtotalPaise);

@@ -1,0 +1,237 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  schemas  = ["commerce"]
+}
+
+enum Role {
+  CUSTOMER
+  ADMIN
+  @@schema("commerce")
+}
+enum OrderStatus {
+  PAYMENT_FAILED
+  CONFIRMED
+  SHIPPED
+  DELIVERED
+  @@schema("commerce")
+}
+enum PaymentOutcome {
+  DECLINED
+  SUCCEEDED
+  @@schema("commerce")
+}
+
+model Profile {
+  id        String   @id @db.Uuid
+  role      Role     @default(CUSTOMER)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+  cart      Cart?
+  orders    Order[]
+  movements InventoryMovement[]
+  audits    AuditEvent[]
+  buckets   RequestBucket[]
+  @@schema("commerce")
+}
+
+model Category {
+  id        String   @id @default(uuid()) @db.Uuid
+  slug      String   @unique @db.VarChar(80)
+  name      String   @db.VarChar(80)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+  products  Product[]
+  @@schema("commerce")
+}
+
+model Collection {
+  id        String   @id @default(uuid()) @db.Uuid
+  slug      String   @unique @db.VarChar(80)
+  title     String   @db.VarChar(120)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+  products  ProductCollection[]
+  @@schema("commerce")
+}
+
+model Product {
+  id                   String   @id @default(uuid()) @db.Uuid
+  categoryId           String   @db.Uuid
+  sku                  String   @unique @db.VarChar(80)
+  slug                 String   @unique @db.VarChar(120)
+  name                 String   @db.VarChar(120)
+  description          String   @db.VarChar(2000)
+  imagePath            String   @db.VarChar(240)
+  imageAlt             String   @db.VarChar(200)
+  pricePaise           Int
+  compareAtPricePaise   Int?
+  material             String   @db.VarChar(80)
+  dimensions           String   @db.VarChar(80)
+  care                 String   @db.VarChar(400)
+  includedContents     String   @db.VarChar(200)
+  occasionTags         String[]
+  intentTags           String[]
+  stock                Int      @default(0)
+  version              Int      @default(0)
+  active               Boolean  @default(true)
+  featured             Boolean  @default(false)
+  createdAt            DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt            DateTime @updatedAt @db.Timestamptz(3)
+  category             Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  collections          ProductCollection[]
+  cartItems            CartItem[]
+  orderItems           OrderItem[]
+  movements            InventoryMovement[]
+  @@index([categoryId, active, pricePaise])
+  @@schema("commerce")
+}
+
+model ProductCollection {
+  productId    String     @db.Uuid
+  collectionId String     @db.Uuid
+  position     Int
+  featured     Boolean    @default(false)
+  createdAt    DateTime   @default(now()) @db.Timestamptz(3)
+  updatedAt    DateTime   @updatedAt @db.Timestamptz(3)
+  product      Product    @relation(fields: [productId], references: [id], onDelete: Restrict)
+  collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Restrict)
+  @@id([productId, collectionId])
+  @@index([collectionId, position, productId])
+  @@schema("commerce")
+}
+
+model Cart {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @unique @db.Uuid
+  revision  Int      @default(0)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+  user      Profile  @relation(fields: [userId], references: [id], onDelete: Restrict)
+  items     CartItem[]
+  orders    Order[]
+  @@schema("commerce")
+}
+
+model CartItem {
+  id        String   @id @default(uuid()) @db.Uuid
+  cartId    String   @db.Uuid
+  productId String   @db.Uuid
+  quantity  Int
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Restrict)
+  @@unique([cartId, productId])
+  @@schema("commerce")
+}
+
+model Order {
+  id                 String      @id @default(uuid()) @db.Uuid
+  reference          String      @unique @db.VarChar(80)
+  userId             String      @db.Uuid
+  cartId             String      @db.Uuid
+  sourceCartRevision Int
+  idempotencyKey     String      @db.Uuid
+  requestHash        String      @db.VarChar(128)
+  status             OrderStatus
+  currency           String      @default("INR") @db.VarChar(3)
+  subtotalPaise      Int
+  shippingPaise      Int         @default(0)
+  taxPaise           Int         @default(0)
+  totalPaise         Int
+  addressSnapshot    Json
+  createdAt          DateTime    @default(now()) @db.Timestamptz(3)
+  updatedAt          DateTime    @updatedAt @db.Timestamptz(3)
+  user               Profile    @relation(fields: [userId], references: [id], onDelete: Restrict)
+  cart               Cart       @relation(fields: [cartId], references: [id], onDelete: Restrict)
+  items              OrderItem[]
+  payment            PaymentAttempt?
+  movements          InventoryMovement[]
+  @@unique([userId, idempotencyKey])
+  @@index([userId, createdAt])
+  @@schema("commerce")
+}
+
+model OrderItem {
+  id             String   @id @default(uuid()) @db.Uuid
+  orderId        String   @db.Uuid
+  productId      String   @db.Uuid
+  skuSnapshot    String   @db.VarChar(80)
+  nameSnapshot   String   @db.VarChar(120)
+  unitPricePaise Int
+  quantity       Int
+  lineTotalPaise Int
+  createdAt      DateTime @default(now()) @db.Timestamptz(3)
+  order          Order    @relation(fields: [orderId], references: [id], onDelete: Restrict)
+  product        Product  @relation(fields: [productId], references: [id], onDelete: Restrict)
+  @@schema("commerce")
+}
+
+model PaymentAttempt {
+  id          String         @id @default(uuid()) @db.Uuid
+  orderId     String         @unique @db.Uuid
+  outcome     PaymentOutcome
+  reasonCode  String          @db.VarChar(80)
+  amountPaise Int
+  currency    String          @default("INR") @db.VarChar(3)
+  createdAt   DateTime        @default(now()) @db.Timestamptz(3)
+  order       Order           @relation(fields: [orderId], references: [id], onDelete: Restrict)
+  @@schema("commerce")
+}
+
+model InventoryMovement {
+  id           String   @id @default(uuid()) @db.Uuid
+  productId    String   @db.Uuid
+  orderId      String?  @db.Uuid
+  actorId      String?  @db.Uuid
+  delta        Int
+  balanceAfter Int
+  reason       String   @db.VarChar(240)
+  createdAt    DateTime @default(now()) @db.Timestamptz(3)
+  product      Product  @relation(fields: [productId], references: [id], onDelete: Restrict)
+  order        Order?   @relation(fields: [orderId], references: [id], onDelete: Restrict)
+  actor        Profile? @relation(fields: [actorId], references: [id], onDelete: Restrict)
+  @@index([productId, createdAt])
+  @@schema("commerce")
+}
+
+model AuditEvent {
+  id         String   @id @default(uuid()) @db.Uuid
+  actorId    String   @db.Uuid
+  entityId   String   @db.VarChar(120)
+  action     String   @db.VarChar(80)
+  safeChange Json
+  createdAt  DateTime @default(now()) @db.Timestamptz(3)
+  actor      Profile  @relation(fields: [actorId], references: [id], onDelete: Restrict)
+  @@index([entityId, createdAt])
+  @@schema("commerce")
+}
+
+model RequestBucket {
+  userId      String   @db.Uuid
+  action      String   @db.VarChar(80)
+  windowStart DateTime @db.Timestamptz(3)
+  count       Int      @default(0)
+  createdAt   DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt   DateTime @updatedAt @db.Timestamptz(3)
+  user        Profile  @relation(fields: [userId], references: [id], onDelete: Restrict)
+  @@id([userId, action, windowStart])
+  @@schema("commerce")
+}
+
+// Anonymous login abuse protection; no password/email/IP is persisted.
+model LoginRequestBucket {
+  keyHash     String   @db.VarChar(64)
+  windowStart DateTime @db.Timestamptz(3)
+  count       Int
+  createdAt   DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt   DateTime @updatedAt @db.Timestamptz(3)
+  @@id([keyHash, windowStart])
+  @@schema("commerce")
+}

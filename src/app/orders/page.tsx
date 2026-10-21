@@ -1,0 +1,3 @@
+import {OrderHistory} from '../../features/customer/order-experience';
+import {CustomerPage} from '../../features/customer/shared';
+export default async function OrdersPage({searchParams}:{searchParams:Promise<{page?:string}>}){const params=await searchParams;const candidate=Number(params.page??1);const page=Number.isSafeInteger(candidate)&&candidate>=1&&candidate<=10000?candidate:1;return <CustomerPage title="Your orders" eyebrow="Thoughtful choices, remembered" description="Persisted orders and simulated payment attempts. Demo purchases only; no real payment or delivery."><OrderHistory key={page} page={page}/></CustomerPage>;}

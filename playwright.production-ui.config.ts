@@ -1,0 +1,2 @@
+import { defineConfig, devices } from '@playwright/test';
+export default defineConfig({ testDir:'./tests/production-ui',retries:0,workers:1,reporter:[['list'],['json',{ outputFile:'.local/t00-production-ui.json' }]],use:{ baseURL:'http://127.0.0.1:3101',trace:'off',screenshot:'off',video:'off' },projects:[{ name:'chromium-production-ui',use:{ ...devices['Desktop Chrome'] } }],webServer:{ command:'npm run start -- --port 3101',url:'http://127.0.0.1:3101',reuseExistingServer:false,env:{ NEXT_PUBLIC_SUPABASE_URL:'',NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY:'' } } });

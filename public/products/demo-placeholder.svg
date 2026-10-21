@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-labelledby="title desc">
+  <title id="title">Original demo catalogue illustration</title>
+  <desc id="desc">A neutral botanical line drawing, not a photograph of a product.</desc>
+  <rect width="400" height="500" fill="#f7f3ea"/>
+  <circle cx="200" cy="235" r="120" fill="#ebe5d8"/>
+  <g fill="none" stroke="#1f3d32" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M200 345V155M200 225C145 225 130 175 150 155C185 155 200 180 200 225M200 280C250 280 275 230 250 210C220 215 200 235 200 280"/>
+    <path d="M145 350H255"/>
+  </g>
+  <text x="200" y="425" text-anchor="middle" fill="#58665f" font-family="Arial,sans-serif" font-size="16">Demo illustration</text>
+</svg>

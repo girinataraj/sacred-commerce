@@ -1,0 +1,5 @@
+import { ActionLink } from './button';
+import { ProductImage } from './product-card';
+export function EditorialHero({ eyebrow,title,description,primary,secondary,image='/editorial/considered-living.svg',imageAlt='Original illustration of a quiet alcove with leaves, a vessel and folded cloth; not product photography.' }: { eyebrow:string; title:string; description:string; primary:{ label:string; href:string }; secondary?:{ label:string; href:string }; image?:string; imageAlt?:string }) {
+  return <section className="editorial-hero" aria-label={title}><div className="hero-copy"><p className="eyebrow">{eyebrow}</p><h1>{title}</h1><p className="hero-description">{description}</p><div className="hero-actions"><ActionLink href={primary.href}>{primary.label}</ActionLink>{secondary && <ActionLink href={secondary.href} tone="secondary">{secondary.label}</ActionLink>}</div><p className="hero-footnote">Independent demo · Original illustration</p></div><div className="hero-art"><ProductImage src={image} alt={imageAlt} priority /></div></section>;
+}
