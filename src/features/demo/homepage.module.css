@@ -17,3 +17,12 @@
 :global(html[data-demo-theme=twilight]) .addButton{color:var(--sc-brass)}
 :global(html[data-demo-theme=twilight]) .addButton:hover:not(:disabled){background:var(--sc-action);color:var(--sc-on-action)}
 :global(html[data-demo-theme=twilight]) .addButton:disabled{opacity:1}
+
+@media(max-width:767px){
+ .hero,.intentions,.gallery,.philosophy,.season{padding-inline:var(--sc-mobile-gutter,24px);}
+}
+@media(max-width:599px){
+ .productTitle:has(:global(.reference-price)){flex-wrap:wrap;}
+ .productTitle:has(:global(.reference-price)) h3{flex:1 1 160px;min-width:0;}
+ .productTitle:has(:global(.reference-price)) :global(.price-block){max-width:100%;align-items:flex-start;}
+}

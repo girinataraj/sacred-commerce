@@ -13,7 +13,7 @@ export function FloatingCart({count,menuOpen}:{count:number;menuOpen:boolean}){
   const measure=()=>{frame=0;const node=link.current;if(!node||document.activeElement===node)return;const r=node.getBoundingClientRect();
    const previousLift=parseFloat(node.style.getPropertyValue('--sc-cart-lift'))||0;
    const baseBottom=innerHeight-r.bottom-previousLift;
-   const controls=Array.from(document.querySelectorAll<HTMLElement>('main a, main button, main input, main select, main textarea, footer a')).filter(control=>!control.querySelector('img')).map(control=>control.getBoundingClientRect());
+   const controls=Array.from(document.querySelectorAll<HTMLElement>('main a, main button, main input, main select, main textarea, main .price-block, main .availability, footer a')).filter(control=>!control.querySelector('img')).map(control=>control.getBoundingClientRect());
    const safe=[0,72,144].find(offset=>{const bottom=innerHeight-baseBottom-offset,top=bottom-r.height;return !controls.some(c=>c.width>0&&c.height>0&&c.left<r.right+8&&c.right>r.left-8&&c.top<bottom+8&&c.bottom>top-8);});
    setLift(previous=>previous===(safe??null)?previous:(safe??null));
   };

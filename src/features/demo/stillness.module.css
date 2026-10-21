@@ -7,3 +7,8 @@
 @media(prefers-reduced-motion:reduce){.section *,.section *::before,.section *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 
 .section::before,.section::after{content:"";position:absolute;inset-inline:0;height:128px;pointer-events:none;z-index:0}.section::before{top:0;background:var(--sc-stillness-entry)}.section::after{bottom:0;background:linear-gradient(to bottom,var(--stillness-ink),var(--sc-season,#1c382b))}@media(max-width:1100px){.section::before,.section::after{height:104px}}@media(max-width:767px){.section::before,.section::after{height:80px}}
+
+@media(max-width:767px){
+ .section{padding-inline:var(--sc-mobile-gutter,24px);}
+ .mountainImage{margin-inline:calc(-1 * var(--sc-mobile-gutter,24px));}
+}

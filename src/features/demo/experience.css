@@ -101,3 +101,10 @@ html[data-demo-theme=twilight] .sc-theme .icon-button:hover{background:var(--sc-
 html[data-demo-theme=twilight] .sc-theme .saving-label{color:var(--sc-brass);}
 html[data-demo-theme=twilight] .sc-theme .editorial-hero,
 html[data-demo-theme=twilight] .sc-theme .search-control{background:var(--sc-surface);}
+/* Shared mobile reading grid; decorative compositions retain their own offsets. */
+@media(max-width:767px){
+ .sc-theme{--sc-mobile-gutter:24px;}
+ .sc-theme .container{padding-inline:var(--sc-mobile-gutter);}
+}
+@media(max-width:360px){.sc-theme{--sc-mobile-gutter:20px;}}
+@media(min-width:768px) and (max-width:1023px){.sc-theme .container{padding-inline:40px;}}
