@@ -39,3 +39,13 @@ A twelve-month vision would validate customer research and accessibility, comple
 ## AI-assisted delivery evidence
 
 AI supported requirements, task decomposition, implementation, SVG asset creation and tests. Human review set priorities, rejected unlicensed reference images, approved original artwork and required honest PASS/FAIL evidence. Test failures and screenshots informed targeted corrections. AI output was treated as a proposal until checked, not a source of customer research or achieved business outcomes.
+
+## Editorial Gallery and Stillness Edit
+
+The approved redesign introduces a signature typographic hero, intent directory, staggered five-product gallery and a distinct seasonal feature. Prices, stock labels, product details and cart actions remain visible. Mobile uses an intentional single-column sequence rather than a scaled desktop composition.
+
+The Stillness Edit follows Curated Offerings and precedes Navratri. Its heading, reflective copy and two links provide a pause without adding duplicate product cards. The primary action leads to Ritual Essentials and the secondary to the project philosophy. Original SVG mountain/crescent and abstract still-life studies replace unlicensed reference images. They are identified as imagined illustrations, with no geographic, spiritual-benefit or product-provenance claim.
+
+A tall mobile page is a deliberate trade-off for readable artwork and controls. Tests cover responsive widths, keyboard access, axe checks, image decoding, reduced motion and preserved commerce behavior. A screenshot evidence defect was traced to mixing viewport and document coordinates; corrected document-relative captures showed no layout defect and did not require a redesign.
+
+Potential success measures include editorial CTA engagement, downstream category/detail/cart engagement and comprehension of the fictional demo boundary. These are proposed measures, not measured uplift or deployed analytics.

@@ -55,3 +55,7 @@ AI assisted requirements decomposition, UI implementation, original illustration
 This is a **sanitized publication snapshot, not the complete development history**. Private development history is preserved separately. Public commits group the working storefront baseline and the subsequent editorial redesign for review; they do not imply the project was developed in two commits. Private environment files, operational handoffs, provider routing details, personal machine paths and raw test logs are intentionally excluded.
 
 This repository is an interview portfolio artifact, not a production-ready store. There is no real payment gateway, production customer data, verified hosted authentication or automatic deployment integration. The existing public demo can lag this source; publication does not deploy or change it.
+
+## Editorial redesign
+
+The current source includes the approved Editorial Gallery homepage and Stillness Edit, using original SVG artwork, responsive composition and explicit commerce actions. The source is ahead of the separately controlled production release. After a demo-mode build, run `npx playwright test --config playwright.stillness-edit.config.ts` for the 75-case local storefront/redesign regression set (installed Chrome required). This command starts a local server and does not deploy.
