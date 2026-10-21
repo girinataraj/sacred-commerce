@@ -49,3 +49,29 @@ The original repository's 1,251 preservation-snapshot files are byte-identical, 
 Owner visual acceptance is the next gate. No merge, push or deployment has occurred. Physical devices, screen-reader/speech-control testing and hosted backend integration are not certified by this local Chrome run. Simultaneous independent multi-tab read-modify-write operations retain the existing browser-cart last-write limitation; cross-tab sequential updates are synchronized. Collision positioning favors access to underlying controls and may temporarily hide the floating shortcut; the header cart remains available. Existing dependency/security findings were neither changed nor remediated in this scoped UI task.
 
 The case study records customer rationale, explicit trade-offs and proposed measurable hypotheses. No conversion or customer-satisfaction uplift is claimed.
+
+## Final owner refinement — fresh release gate
+
+Reviewed baseline: `0cb2e6a4d12de8e3f949a955e2ddb824ef5405e1`. The only application-source change is the Light upper Stillness gradient in `src/features/demo/stillness.module.css`. Controlled pearl-blue, slate-blue and midnight stops replace the direct cream-to-near-black blend. Existing 128/104/80px responsive bands, all content padding, pseudo-element isolation, pointer-inert behavior and the lower forest transition are unchanged. Twilight retains its original upper gradient; before/after viewport PNGs at 390px and 1440px are byte-identical in that appearance.
+
+Actual viewport screenshots were captured before and after at 390×844 and 1440×1000 in both appearances: entry, gradient, Added state, product actions and footer. All 20 final states showed the floating cart within the checked safe-area bounds, with zero intersections with visible non-image action controls. Images were inspected visually, including product actions and gallery feedback. No confirmed positioning defect required a code change. Existing collision fallback, drawer/purchase-route hiding and header cart remain intact.
+
+### One fresh sequential verification gate
+
+Environment: `SACRED_DEMO_MODE=true`; installed Chrome; local production build; no database connection or external deployment. All commands completed after the sole application-source change, with no subsequent application changes.
+
+| Actual command | Result |
+|---|---|
+| `npm run lint` | PASS, exit 0 |
+| `npm run typecheck` | PASS, exit 0 |
+| `npm run build` | PASS, exit 0 |
+| `npm run test:unit` | 166 PASS / 0 FAIL / 0 skipped; 16 files; exit 0 |
+| `npx playwright test --config .local/twilight-refinement/regression.config.ts` | **106 PASS / 0 FAIL / 0 skipped / 0 flaky in a single run**, exit 0 |
+| Total executed tests | **272 PASS / 0 FAIL / 0 skipped** |
+| `git diff --check` | PASS |
+
+The ignored regression configuration imports the unchanged complete relevant regression configuration and changes only log/artifact locations and explicit working-directory resolution. The prior accepted QA artifacts remain untouched. The fresh run includes all 75 editorial, Stillness and shopping regressions plus all 31 Twilight tests: Added timeout, rapid quantities and limits, theme persistence/storage failure, keyboard focus, reduced motion, Back navigation, cross-tab cart updates, simulated decline/success, demo boundaries and representative axe checks. Both Light and Twilight at 390px and 1440px are included, together with the broader existing width matrix.
+
+Evidence is under `.local/twilight-refinement/`: `gate-results.json`, `lint.log`, `typecheck.log`, `build.log`, `unit.log`, `browser.log`, `regression-results.json`, `before-viewport-checks.json` and `after-viewport-checks.json`. Before/after gradient viewport screenshots are `before/light-1440-gradient.png`, `after/light-1440-gradient.png`, `before/light-390-gradient.png` and `after/light-390-gradient.png`. Other actual viewport captures sit beside them. No raw evidence is included in the publication history.
+
+Recommendation: technically ready for owner visual approval and a separately authorized staged demo deployment. The gradient is a visual refinement, not a measured customer-outcome claim. Existing physical-device, assistive-technology and hosted-backend limitations still apply. No merge, push, deployment, Supabase operation, dependency change, shopping-simulation change or disclosure change occurred.
