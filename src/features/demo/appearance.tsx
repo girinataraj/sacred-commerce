@@ -11,5 +11,5 @@ function subscribe(change:()=>void){
 function apply(mode:Appearance){document.documentElement.dataset.demoTheme=mode;try{localStorage.setItem(appearanceKey,mode);}catch{/* DOM keeps a usable in-memory preference for this page. */}window.dispatchEvent(new Event(event));}
 export function AppearanceToggle(){
  const mode=useSyncExternalStore(subscribe,snapshot,()=>'light' as const);
- return <button type="button" className="sc-theme-toggle" role="switch" aria-label="Twilight appearance" aria-checked={mode==='twilight'} onClick={()=>apply(mode==='light'?'twilight':'light')}><span data-active={mode==='light'}>Light</span><span aria-hidden="true">/</span><span data-active={mode==='twilight'}>Twilight</span></button>;
+ return <button type="button" className="sc-theme-toggle" role="switch" aria-label="Moonlight appearance" aria-checked={mode==='twilight'} onClick={()=>apply(mode==='light'?'twilight':'light')}><span data-active={mode==='light'}>Light</span><span aria-hidden="true">/</span><span data-active={mode==='twilight'}>Moonlight</span></button>;
 }

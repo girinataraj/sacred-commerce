@@ -3,7 +3,7 @@ import AxeBuilder from '@axe-core/playwright';
 const key='sacred-commerce-standalone-demo-cart-v1';
 const appearance='sacred-commerce-appearance-v1';
 test('theme toggle changes the actual canvas and persists',async({page})=>{
- await page.goto('/');const toggle=page.getByRole('switch',{name:'Twilight appearance'});await expect(toggle).toBeVisible({timeout:1500});
+ await page.goto('/');const toggle=page.getByRole('switch',{name:'Moonlight appearance'});await expect(toggle).toBeVisible({timeout:1500});
  const before=await page.locator('body').evaluate(n=>getComputedStyle(n).backgroundColor);await toggle.click();await expect(toggle).toBeChecked();
  expect(await page.locator('body').evaluate(n=>getComputedStyle(n).backgroundColor)).not.toBe(before);await page.getByRole('link',{name:'Explore Shop',exact:true}).click();await expect(toggle).toBeChecked();await page.reload();await expect(toggle).toBeChecked();
  expect(await page.evaluate(k=>localStorage.getItem(k),appearance)).toBe('twilight');await toggle.click();await page.reload();await expect(toggle).not.toBeChecked();
@@ -35,9 +35,9 @@ test('rapid additions, limits and shared button feedback preserve exact totals',
  await page.goto('/products');const bell=page.locator('.product-card').filter({has:page.getByRole('heading',{name:'Brass Table Bell',exact:true})});await bell.getByRole('button',{name:'Add to demo cart'}).click();await expect(bell.getByRole('button')).toBeDisabled();await page.goto('/cart');await expect(page.getByLabel('Quantity for Clay Festival Lamp')).toHaveValue('5');await expect(page.getByText('Total: ₹1,794.00',{exact:true})).toBeVisible();
 });
 test('blocked storage leaves appearance, feedback and memory-only shopping usable',async({page})=>{
- await page.addInitScript(()=>{Storage.prototype.getItem=function(){throw new DOMException('Blocked','SecurityError');};Storage.prototype.setItem=function(){throw new DOMException('Blocked','SecurityError');};});const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('/products/clay-festival-lamp');await page.getByRole('switch',{name:'Twilight appearance'}).click();await expect(page.getByRole('switch')).toBeChecked();await page.getByRole('button',{name:'Add to demo cart'}).click();await page.getByRole('link',{name:'Cart (1)',exact:true}).click();await expect(page.getByLabel('Quantity for Clay Festival Lamp')).toHaveValue('1');expect(errors).toEqual([]);
+ await page.addInitScript(()=>{Storage.prototype.getItem=function(){throw new DOMException('Blocked','SecurityError');};Storage.prototype.setItem=function(){throw new DOMException('Blocked','SecurityError');};});const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('/products/clay-festival-lamp');await page.getByRole('switch',{name:'Moonlight appearance'}).click();await expect(page.getByRole('switch')).toBeChecked();await page.getByRole('button',{name:'Add to demo cart'}).click();await page.getByRole('link',{name:'Cart (1)',exact:true}).click();await expect(page.getByLabel('Quantity for Clay Festival Lamp')).toHaveValue('1');expect(errors).toEqual([]);
 });
-test('saved Twilight is applied before hydration without console mismatches',async({page})=>{
+test('saved Moonlight is applied before hydration without console mismatches',async({page})=>{
  await page.addInitScript(k=>localStorage.setItem(k,'twilight'),appearance);const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
  await page.goto('/products',{waitUntil:'domcontentloaded'});expect(await page.locator('html').getAttribute('data-demo-theme')).toBe('twilight');await expect(page.getByRole('switch')).toBeChecked();await page.reload();await expect(page.getByRole('switch')).toBeChecked();expect(errors).toEqual([]);
 });
@@ -55,16 +55,16 @@ test('floating shortcut stays clear of action controls and disappears with the m
 test('another tab updates the floating badge using the existing cart storage event',async({page,context})=>{
  await page.goto('/products');const other=await context.newPage();await other.goto('/');await other.evaluate(k=>localStorage.setItem(k,'{"SC-001":3,"SC-002":1}'),key);await expect(page.locator('.sc-floating-count')).toHaveText('4');await other.evaluate(k=>localStorage.removeItem(k),key);await expect(page.locator('.sc-floating-count')).toHaveText('0');await other.close();
 });
-test('Twilight declined and successful simulations retain accurate feedback and quantities',async({page})=>{
+test('Moonlight declined and successful simulations retain accurate feedback and quantities',async({page})=>{
  await page.goto('/');await page.getByRole('switch').click();await page.evaluate(k=>localStorage.setItem(k,'{"SC-001":2}'),key);await page.goto('/checkout');await page.getByLabel('Simulation outcome').selectOption('declined');await page.getByRole('button',{name:'Complete simulated purchase'}).click();await expect(page.getByRole('status')).toContainText('declined');await expect(page.getByLabel('Quantity for Clay Festival Lamp')).toHaveValue('2');expect((await new AxeBuilder({page}).analyze()).violations).toEqual([]);
  await page.getByLabel('Simulation outcome').selectOption('success');await page.getByRole('button',{name:'Complete simulated purchase'}).click();await expect(page.getByRole('heading',{name:'Demo order confirmation'})).toBeFocused();await expect(page.getByRole('status')).not.toContainText('declined');expect((await new AxeBuilder({page}).analyze()).violations).toEqual([]);await expect(page.getByRole('link',{name:'Cart (0)',exact:true})).toBeVisible();
 });
 for(const mode of ['light','twilight'])for(const width of [320,360,390,768,1024,1440,1920])test(`${mode} layout and accessible focus at ${width}px`,async({page})=>{
- await page.setViewportSize({width,height:1000});await page.goto('/');if(mode==='twilight')await page.getByRole('switch',{name:'Twilight appearance'}).click();
+ await page.setViewportSize({width,height:1000});await page.goto('/');if(mode==='twilight')await page.getByRole('switch',{name:'Moonlight appearance'}).click();
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await page.keyboard.press('Tab');await page.getByRole('switch').focus();await expect(page.getByRole('switch')).toBeFocused();expect(await page.getByRole('switch').evaluate(n=>getComputedStyle(n).outlineStyle)).not.toBe('none');
  if([320,390,1440].includes(width)){const result=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();expect(result.violations).toEqual([]);}
  const section=page.locator('#stillness-edit');await section.scrollIntoViewIfNeeded();await expect(section.getByRole('link',{name:'Explore Ritual Essentials'})).toBeVisible();expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
 });
-for(const route of ['/products','/products/clay-festival-lamp','/cart','/checkout'])test(`Twilight contrast and form visibility on ${route}`,async({page})=>{
- await page.goto('/');await page.getByRole('switch',{name:'Twilight appearance'}).click();await page.evaluate(k=>localStorage.setItem(k,'{"SC-001":1}'),key);await page.goto(route);expect((await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze()).violations).toEqual([]);expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+for(const route of ['/products','/products/clay-festival-lamp','/cart','/checkout'])test(`Moonlight contrast and form visibility on ${route}`,async({page})=>{
+ await page.goto('/');await page.getByRole('switch',{name:'Moonlight appearance'}).click();await page.evaluate(k=>localStorage.setItem(k,'{"SC-001":1}'),key);await page.goto(route);expect((await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze()).violations).toEqual([]);expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
 });

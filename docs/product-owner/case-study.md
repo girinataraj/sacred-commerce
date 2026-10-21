@@ -67,3 +67,13 @@ Twilight changes interface tokens rather than inverting product images. Focus, f
 Proposed evaluation: compare add-confirmation comprehension and accidental repeat additions, time to reach/edit the cart, appearance preference retention, and mobile task completion. Establish a consented baseline before claiming improvement. No uplift has been measured and no analytics service was added. Address and payment-like form values must never enter measurement events.
 
 Verification combines existing editorial/Stillness/shopping regressions with focused preference, storage failure, rapid-add, badge, navigation, reduced-motion, responsive and axe checks. Screenshot evidence and exact executed results are recorded in the local upgrade handoff; browser automation does not replace assistive-technology or physical-device testing.
+
+## Approved Light and Moonlight identities
+
+The final palette separates two intentional identities within the existing editorial layout. Light preserves ivory, heritage forest green and original warm product colours, using a controlled ivory-to-sage-to-forest passage into Stillness. Moonlight uses midnight/deeper indigo, silver highlights and ivory typography throughout, including seasonal merchandising, footer, forms, floating cart and feedback. Background tokens change; product images and original editorial illustrations are not filtered or recoloured.
+
+The approved MagicPath concept informed the colour direction only. Its placeholder catalogue, mock shopping logic, illustrations and layout code were not imported. Existing discovery, shared cart, Added feedback, page motion, keyboard navigation and clearly disclosed simulation boundaries remain the product baseline.
+
+Light remains the default. The visible optional theme is Moonlight; its existing validated `twilight` storage value is retained for compatibility with previously saved preferences. This avoids a silent preference reset or unnecessary storage migration.
+
+Acceptance now includes computed background/gradient checks against cross-theme colour leakage, representative route and drawer axe checks, and both appearances at 320, 390, 768, 1440 and 1920px. Expanded checks exposed and corrected a low-contrast Light caption and an inherited ivory collection panel under Moonlight. These are verified quality improvements, not evidence of conversion uplift. Customer-comfort and preference-retention hypotheses still require consented research and measurement.
